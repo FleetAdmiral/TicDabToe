@@ -45,6 +45,7 @@ class Player40:
 		POSSIBLE_WIN_SEQUENCES = [(0,1,2), (3,4,5), (6,7,8), (0,3,6), (1,4,7), (2,5,8), (0,4,8), (2,4,6)]
 		for seq in POSSIBLE_WIN_SEQUENCES:
 			temp_seq = [block_stat[index] for index in seq if block_stat[index] != '-' and block_stat[index] != 'd']
+			
 			if flag in temp_seq:
 				if opponent_flag in temp_seq:
 					continue
@@ -214,6 +215,8 @@ class Player40:
 			return [old_move[0], old_move[1], self.Winning_Heurisitic(temp_board, board_stat, flag)]
 			
 		cells = self.get_blocks(temp_board, board_stat, old_move)
+		print "cell is " 
+		print cells
 		
 		symbol = 'o' if flag else 'x'
 		if depth%2 == 0:
@@ -361,12 +364,12 @@ class Player2:
 
 #Initializes the game
 def get_init_board_and_blockstatus():
-	board = []
+	board = []   #this is same
 	for i in range(9):
 		row = ['-']*9
 		board.append(row)
 	
-	block_stat = ['-']*9
+	block_stat = ['-']*9  #same for both 
 	return board, block_stat
 
 # Checks if player has messed with the board. Don't mess with the board that is passed to your move function. 
@@ -620,7 +623,7 @@ def print_lists(gb, bs):
 		print
 	print "=================================="
 
-	print "=========== Block Status ========="
+	print "=========== Block Status ========="  #printing laterally
 	for i in range(0, 9, 3):
 		print bs[i] + " " + bs[i+1] + " " + bs[i+2] 
 	print "=================================="
