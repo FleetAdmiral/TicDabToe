@@ -34,21 +34,21 @@ class player14:
 				return 100000 if flag ==1 else -100000
 			else:
 				return 0
-		
+
 		start_row, start_col, ret = 0,0,0
-		
-		if flag == 0
+
+		if flag == 0:
 			flag, opponent_flag = 'x', 'o'
 		else:
 			flag, opponent_flag = 'o', 'x'
-		
+
 		POSSIBLE_WIN_SEQUENCES = [(0,1,2,3), (4,5,6,7), (8,9,10,11), (12,13,14,15),  (0,4,5,12), (1,5,9,13), (2,6,10,14), (3,7,11,15), (0,5,10,15), (3,6,9,12) ]
 
 		for seq in POSSIBLE_WIN_SEQUENCES:
 			temp_seq = [board.block_status[index/4][index%4] for index in seq if board.block_status[index/4][index%4] != '-' and board.block_status[index/4][index%4] != 'd'
 
 			if flag in temp_seq:
-				if opponent_flag in temp_seq:
+			    if opponent_flag in temp_seq:
 					continue
 				if len(temp_seq) > 1:
 					ret+=7
@@ -90,7 +90,7 @@ class player14:
 			start_col = (start_col + 4) % 16
 			if start_col == 0:
 				start_row += 4
-		
+
 		return ret
 
     def get_empty_cells(self, board, bla1):
@@ -113,7 +113,7 @@ class player14:
 						cells.append((i,j))
 		return cells
 
- 
+
 	def get_blocks(self, board, old_move):
 		#Did not define for_corner variable, check later
 
@@ -129,7 +129,7 @@ class player14:
 			if old_move[1] in [1,5,9,13]:
 				#BLOCK NUMBER 1 in diagram
 				block_allowed=[1]
-			
+
 			elif old_move[1] in [0,4,8,12]:
 				#0 number
 				block_allowed=[0]
@@ -145,7 +145,7 @@ class player14:
 			if old_move[1] in [0,4,8,12]:
 				#BLOCK NUMBER 4 in diagram
 				block_allowed=[4]
-			
+
 			elif old_move[1] in [1,5,9,13]:
 				#5 number
 				block_allowed=[5]
@@ -161,7 +161,7 @@ class player14:
 			if old_move[1] in [0,4,8,12]:
 				#BLOCK NUMBER 8 in diagram
 				block_allowed=[8]
-			
+
 			elif old_move[1] in [1,5,9,13]:
 				#9 number
 				block_allowed=[9]
@@ -177,7 +177,7 @@ class player14:
 			if old_move[1] in [0,4,8,12]:
 				#BLOCK NUMBER 12 in diagram
 				block_allowed=[12]
-			
+
 			elif old_move[1] in [1,5,9,13]:
 				#13 number
 				block_allowed=[13]
@@ -192,39 +192,39 @@ class player14:
 		for i in reversed(block_allowed):
 			if board.board_status[i]!='-':
 				block_allowed.remove(i)
-			
+
 		#return all the empty cells in the block allowed
 		return self.get_empty_cells(board, block_allowed)
 
 	def terminal_state_reached(self, board):
 		#CHECK ROW WIN
-		if (board.block_status[0/4][0%4]== board.block_status[1] and board.block_status[1]==board.block_status[2] and board.block_status[2]==board.block_status[3] and board.block_status[1]!='-' and board.block_status[1]!='d') or
-		(board.block_status[4]== board.block_status[5] and board.block_status[5]==board.block_status[6] and board.block_status[6]==board.block_status[7] and board.block_status[4]!='-' and board.block_status[4]!='d') or
-		(board.block_status[8]== board.block_status[9] and board.block_status[9]==board.block_status[10] and board.block_status[10]==board.block_status[11] and board.block_status[8]!='-' and board.block_status[8]!='d') or
-		(board.block_status[12]== board.block_status[13] and board.block_status[13]==board.block_status[14] and board.block_status[14]==board.block_status[15] and board.block_status[12]!='-' and board.block_status[12]!='d'):
+		if (board.block_status[0/4][0%4]== board.block_status[1/4][1%4]] and board.block_status[1/4][1%4]==board.block_status[2/4][2%4] and board.block_status[2/4][2%4]==board.block_status[3/4][3%4] and board.block_status[1/4][1%4]!='-' and board.block_status[1/4][1%4]!='d') or
+		(board.block_status[4/4][4%4]== board.block_status[5/4][5%4] and board.block_status[5/4][5%4]==board.block_status[6/4][6%4] and board.block_status[6/4][6%4]==board.block_status[7/4][7%4] and board.block_status[4/4][4%4]!='-' and board.block_status[4/4][4%4]!='d') or
+		(board.block_status[8/4][8%4]== board.block_status[9/4][9%4] and board.block_status[9/4][9%4]==board.block_status[10/4][10%4] and board.block_status[10/4][10%4]==board.block_status[11/4][11%4] and board.block_status[8/4][8%4]!='-' and board.block_status[8/4][8%4]!='d') or
+		(board.block_status[12/4][12%4]== board.block_status[13/4][13%4] and board.block_status[13/4][13%4]==board.block_status[14/4][14%4] and board.block_status[14/4][14%4]==board.block_status[15/4][15%4] and board.block_status[12/4][12%4]!='-' and board.block_status[12/4][12%4]!='d'):
 			return True, 'W'
-		
+
 
 		#Check col win
-		elif (board.block_status[0]== board.block_status[4] and board.block_status[4]==board.block_status[8] and board.block_status[8]==board.block_status[12] and board.block_status[0]!='-' and board.block_status[0]!='d') or
-		(board.block_status[1]== board.block_status[5] and board.block_status[5]==board.block_status[9] and board.block_status[9]==board.block_status[13] and board.block_status[1]!='-' and board.block_status[1]!='d') or
-		(board.block_status[2]== board.block_status[6] and board.block_status[6]==board.block_status[10] and board.block_status[10]==board.block_status[14] and board.block_status[2]!='-' and board.block_status[2]!='d') or
-		(board.block_status[3]== board.block_status[7] and board.block_status[7]==board.block_status[11] and board.block_status[11]==board.block_status[15] and board.block_status[3]!='-' and board.block_status[3]!='d'):
+		elif (board.block_status[0/4][0%4]== board.block_status[4/4][4%4] and board.block_status[4/4][4%4]==board.block_status[8/4][8%4] and board.block_status[8/4][8%4]==board.block_status[12/4][12%4] and board.block_status[0/4][0%4]!='-' and board.block_status[0/4][0%4]!='d') or
+		(board.block_status[1/4][1%4]== board.block_status[5/4][5%4] and board.block_status[5/4][5%4]==board.block_status[9/4][9%4] and board.block_status[9/4][9%4]==board.block_status[13/4][13%4] and board.block_status[1/4][1%4]!='-' and board.block_status[1/4][1%4]!='d') or
+		(board.block_status[2/4][2%4]== board.block_status[6/4][6%4] and board.block_status[6/4][6%4]==board.block_status[10/4][10%4] and board.block_status[10/4][10%4]==board.block_status[14/4][14%4] and board.block_status[2/4][2%4]!='-' and board.block_status[2/4][2%4]!='d') or
+		(board.block_status[3/4][3%4]== board.block_status[7/4][7%4] and board.block_status[7/4][7%4]==board.block_status[11/4][11%4] and board.block_status[11/4][11%4]==board.block_status[15/4][15%4] and board.block_status[3/4][3%4]!='-' and board.block_status[3/4][3%4]!='d'):
 			return True, 'W'
-		
+
 		#Check diagonal win
-		elif (board.block_status[0]== board.block_status[5] and board.block_status[5]==board.block_status[10] and board.block_status[10]==board.block_status[15] and board.block_status[0]!='-' and board.block_status[0]!='d') or
-		(board.block_status[3]== board.block_status[6] and board.block_status[6]==board.block_status[9] and board.block_status[9]==board.block_status[12] and board.block_status[3]!='-' and board.block_status[3]!='d'):
+		elif (board.block_status[0/4][0%4]== board.block_status[5/4][5%4] and board.block_status[5/4][5%4]==board.block_status[10/4][10%4] and board.block_status[10/4][10%4]==board.block_status[15/4][15%4] and board.block_status[0/4][0%4]!='-' and board.block_status[0/4][0%4]!='d') or
+		(board.block_status[3/4][3%4]== board.block_status[6/4][6%4] and board.block_status[6/4][6%4]==board.block_status[9/4][9%4] and board.block_status[9/4][9%4]==board.block_status[12/4][12%4] and board.block_status[3/4][3%4]!='-' and board.block_status[3/4][3%4]!='d'):
 			return True, 'W'
-		
+
 		else:
 			smflag=0
 			for i in xrange(9):
 				for j in xrange(9):
-					if board.board_status[i][j] == '-' and board.block_status[(i/4)*4 + (j/4)] == '-':
+					if board.board_status[i][j] == '-' and board.block_status[((i/4)*4 + (j/4))/4][((i/4)*4 + (j/4))%4] == '-':
 						smflag =1
 						break
-			
+
 			if smflag == 1
 			#GAME IS ON BRO
 				return False, 'Continue'
@@ -238,7 +238,7 @@ class player14:
 		block_no = (move_ret[0]/4)*4 + move_ret[1]/4
 		updated_block, id1,id2, mflg = -1, block_no/4, block_no%4, 0
 
-		if board.block_status[block_no] == '-':
+		if board.block_status[block_no/4][block_no%4] == '-':
 			if board.board_status[id1*4][id2*4] == board.board_status[id1*4+1][id2*4+1] and boad.board_status[id1*4+1][id2*4+1] == board.board_status[id1*4+2][id2*4+2] and board.board_status[id1*4+2][id2*4+2] == board.board_status[id1*4+3][id2*4+3] and  board.board_status[id1*4+1][id2*4+1] != '-':
 				mflg=1
 			if board.board_status[id1*4+3][id2*4] == board.board_status[id1*4+2][id2*4+1] and board.board_status[id1*4+2][id2*4+1] == board.board_status[id1*4+1][id2*4+2] and board.board_status[id1*4+1][id2*4+2] == board.board_status[id1*4][id2*4+3] and board.board_status[id1*4+3][id2*4] != '-':
@@ -250,16 +250,16 @@ class player14:
 					if board.board_status[id1*4][i] == board.board_status[id1*4 + 1][i] and board.board_status[id1*4 + 1][i] ==board.board_status[id1*4+2][i] and board.board_status[id1*4 + 2][i]==board.board_status[id1*4 + 3][i] and board.board_status[id1*4][i]!= '-':
 						mflg = 1
 						break
-		
+
 			#rowise check for flag
 			if mflg !=1:
 				for i in xrange(id1*4, id1*4 + 4):
 					if board.board_status[i][id1*4] == board.board_status[i][id1*4 + 1][i] and board.board_status[i][id1*4 + 1] ==board.board_status[i][id1*4+2] and board.board_status[i][id1*4 + 2]==board.board_status[i][id1*4 + 3] and board.board_status[i][id1*4]!= '-':
 						mflg = 1
 						break
-		
+
 		if mflg==1:
-			board.block_status[block_no] , updated_block = fl, block_no
+			board.block_status[block_no/4][block_no%4] , updated_block = fl, block_no
 			return [board.block_status, updated_block]
 
 		#check for draw on the block if not modified
@@ -272,11 +272,11 @@ class player14:
 					break
 		if flag == 0:
 			#draw
-			board.block_status[block_no], updated_block ='d', block_no
+			board.block_status[block_no/4][block_no%4], updated_block ='d', block_no
 		return [board.block_status, updated_block]
 
 
-		
+
 
 	def alpha_beta_pruning(self, board, old_move, alpha, beta, flag , depth):
 		if(depth ==  4)
@@ -309,23 +309,23 @@ class player14:
 				if game_state:
 					board.board_status[a][b]='-'
 					if updated_block != -1:
-						board.block_status[updated_block] = '-'
+						board.block_status[updated_block/4][updated_block%4] = '-'
 					return [a, b, 10000]
 
 				val = self.alpha_beta_pruning(board, (a,b), alpha, beta, flag^1, depth+1)
 
 				if(val[2] > max_list[2]):
 					max_list[0], max_list[1], max_list[2] =a , b , val[2];
-				
+
 				alpha = max(alpha, max_list[2])
 				board.board_status[a][b] = '-'
 
 				if updated_block != -1:
-					board.block_status[updated_block] = '-'
-				
+					board.block_status[updated_block/4][updated_block%4] = '-'
+
 				if (beta <= alpha):
 					break
-			
+
 			return max_list
 		else:
 			'''Min Node '''
@@ -333,7 +333,7 @@ class player14:
 			min_list = [-1, -1, 100000]
 			for i in coords:
 				a, b = i
-			
+
 				board.board_status[a][b] = symbol
 
 				board.block_status , updated_block = self.update_overall_board(board,(a,b),symbol)
@@ -342,25 +342,25 @@ class player14:
 				if game_state:
 					board.board_status[a][b]='-'
 					if updated_block != -1:
-						board.block_status[updated_block] = '-'
+						board.block_status[updated_block/4][updated_block%4] = '-'
 					return [a, b, -10000]
 
 				val = self.alpha_beta_pruning(board, (a,b), alpha, beta, flag^1, depth+1)
 
 				if(val[2] <= min_list[2]):
 					min_list[0], min_list[1], min_list[2] =a , b , val[2];
-				
+
 				beta = min(beta, min_list[2])
 				board.board_status[a][b] = '-'
 
 				# STAAAAAAAR CHANGE, because this is list, and we have a 2d array
-				
+
 				if updated_block != -1:
-					board.block_status[updated_block] = '-'
-				
+					board.block_status[updated_block/4][updated_block%4] = '-'
+
 				if (beta <= alpha):
 					break
-			
+
 			return min_list
 
 
@@ -370,14 +370,14 @@ class player14:
 			flag=1
 		else:
 			flag=0
-	
+
 	coord = tuple(self.alpha_beta_pruning(board, old_move, -10**6-1, 10**6, flag, 0)[0:2])
-	
+
 	#if old move is (-1,-1)
 	if coord[0] == -1 or coord[0] == -1:
 		coords = self.get_blocks(board, old_move)
 		return coords[random.randrange(len(cells))]
-	
+
 	#return move
 	return coord
 
@@ -385,7 +385,7 @@ class Manual_Player:
 	def __init__(self):
 		pass
 	def move(self, board, old_move, flag):
-		print 'Enter your move: <format:row column> (you\'re playing with', flag + ")"	
+		print 'Enter your move: <format:row column> (you\'re playing with', flag + ")"
 		mvp = raw_input()
 		mvp = mvp.split()
 		return (int(mvp[0]), int(mvp[1]))
@@ -408,14 +408,14 @@ class Board:
 				if j%4 == 0:
 					print "",
 				print self.board_status[i][j],
-			print 
+			print
 		print
 
 		print '==============Block State=============='
 		for i in range(4):  #printing horizontally
 			for j in range(4):
 				print self.block_status[i][j],
-			print 
+			print
 		print '======================================='
 		print
 		print
@@ -437,7 +437,7 @@ class Board:
 				for j in range(16):
 					if self.board_status[i][j] == '-' and self.block_status[i/4][j/4] == '-':
 						allowed_cells.append((i,j))
-		return allowed_cells	
+		return allowed_cells
 
 	def find_terminal_state(self):
 		#checks if the game is over(won or drawn) and returns the player who have won the game or the player who has higher blocks in case of a draw
@@ -457,11 +457,11 @@ class Board:
 					cntd += 1
 
 		for i in range(4):
-			row = bs[i]							#i'th row 
+			row = bs[i]							#i'th row
 			col = [x[i] for x in bs]			#i'th column
 			#print row,col
 			#checking if i'th row or i'th column has been won or not
-			if (row[0] =='x' or row[0] == 'o') and (row.count(row[0]) == 4):	
+			if (row[0] =='x' or row[0] == 'o') and (row.count(row[0]) == 4):
 				return (row[0],'WON')
 			if (col[0] =='x' or col[0] == 'o') and (col.count(col[0]) == 4):
 				return (col[0],'WON')
@@ -479,7 +479,7 @@ class Board:
 	def check_valid_move(self, old_move, new_move):
 		#checks if a move is valid or not given the last move
 		if (len(old_move) != 2) or (len(new_move) != 2):
-			return False 
+			return False
 		if (type(old_move[0]) is not int) or (type(old_move[1]) is not int) or (type(new_move[0]) is not int) or (type(new_move[1]) is not int):
 			return False
 		if (old_move != (-1,-1)) and (old_move[0] < 0 or old_move[0] > 16 or old_move[1] < 0 or old_move[1] > 16):
@@ -545,7 +545,7 @@ def gameplay(obj1, obj2):				#game simulator
 		temp_block_status = copy.deepcopy(game_board.block_status)
 		signal.alarm(TIME)
 
-		try:									#try to get player 1's move			
+		try:									#try to get player 1's move
 			p1_move = obj1.move(game_board, old_move, fl1)
 		except TimedOutExc:					#timeout error
 #			print e
@@ -556,7 +556,7 @@ def gameplay(obj1, obj2):				#game simulator
 		except Exception as e:
 			WINNER = 'P2'
 			MESSAGE = 'INVALID MOVE'
-			pts2 = 16			
+			pts2 = 16
 			break
 		signal.alarm(0)
 
@@ -602,7 +602,7 @@ def gameplay(obj1, obj2):				#game simulator
 		except Exception as e:
 			WINNER = 'P1'
 			MESSAGE = 'INVALID MOVE'
-			pts1 = 16			
+			pts1 = 16
 			break
 		signal.alarm(0)
 		if (game_board.block_status != temp_block_status) or (game_board.board_status != temp_board_status):
@@ -623,7 +623,7 @@ def gameplay(obj1, obj2):				#game simulator
 			WINNER = 'P2'
 			MESSAGE = 'WON'
 			break
-		elif status[1] == 'DRAW':					
+		elif status[1] == 'DRAW':
 			WINNER = 'NONE'
 			MESSAGE = 'DRAW'
 			break
@@ -662,17 +662,17 @@ if __name__ == '__main__':
 		print '                2 => Human vs. Random Player'
 		print '                3 => Human vs. Human'
 		sys.exit(1)
- 
+
 	obj1 = ''
 	obj2 = ''
-	option = sys.argv[1]	
+	option = sys.argv[1]
 	if option == '1':
 		obj1 = Random_Player()
 		obj2 = Random_Player()
 
 	elif option == '2':
-		obj1 = Random_Player()
-		obj2 = Manual_Player()
+		obj1 = player14()
+		obj2 = Random_Player()
 	elif option == '3':
 		obj1 = Manual_Player()
 		obj2 = Manual_Player()
@@ -681,5 +681,5 @@ if __name__ == '__main__':
 		sys.exit(1)
 
 	x = gameplay(obj1, obj2)
-	print "Player 1 points:", x[0] 
+	print "Player 1 points:", x[0]
 	print "Player 2 points:", x[1]
