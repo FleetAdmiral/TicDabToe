@@ -26,6 +26,123 @@ class player14:
 	def __init__(self):
 		pass
 
+	def get_empty_cells(self, board, bla1):
+		cells = [] #list of tuples that are allowed
+		#Iterate over all the blocks that are possible, in this case it is only 1 and get all the empty cells
+
+		for x in bla1:
+			id1 = x/4
+			id2 = x%4
+
+			for i in xrange(id1*4, id1*4 + 4):
+				for j in xrange(id2*4, id2*4 + 4):
+					if board.board_status[i][j] == '-':
+						cells.append((i,j))
+		#Or else if all the blocks are full, move anywhere
+		if cells == []:
+			for i in range(16):
+				for j in range(16):
+					no = (i/4)*4 + j/4
+					if board.board_status == '-' and board.block_status[no] == '-':
+						cells.append((i,j))
+		return cells
+
+ 
+	def get_blocks(self, board, old_move):
+		#Did not define for_corner variable, check later
+
+		#list of permitted blocks, based on old move
+		block_allowed = []
+
+		#Omitting old moves of corners because we do not have 3 choices
+
+		#We have only one block to choose from anyway, according to the rules
+
+		#this is the first row.
+		if old_move[0]%4==0:
+			if old_move[1] in [1,5,9,13]:
+				#BLOCK NUMBER 1 in diagram
+				block_allowed=[1]
+			
+			elif old_move[1] in [0,4,8,12]:
+				#0 number
+				block_allowed=[0]
+			elif old_move[1] in [2,6,10,14]:
+				#2 number
+				block_allowed=[2]
+			elif old_move[1] in [3,7, 11,15]:
+				#3 number
+				block_allowed=[3]
+
+		#This is the second row.
+		elif old_move[0]%4==1:
+			if old_move[1] in [0,4,8,12]:
+				#BLOCK NUMBER 4 in diagram
+				block_allowed=[4]
+			
+			elif old_move[1] in [1,5,9,13]:
+				#5 number
+				block_allowed=[5]
+			elif old_move[1] in [2,6,10,14]:
+				#6 number
+				block_allowed=[6]
+			elif old_move[1] in [3,7, 11,15]:
+				#7 number
+				block_allowed=[7]
+
+		#This is row no. 3
+		elif old_move[0]%4==2:
+			if old_move[1] in [0,4,8,12]:
+				#BLOCK NUMBER 8 in diagram
+				block_allowed=[8]
+			
+			elif old_move[1] in [1,5,9,13]:
+				#9 number
+				block_allowed=[9]
+			elif old_move[1] in [2,6,10,14]:
+				#10 number
+				block_allowed=[10]
+			elif old_move[1] in [3,7, 11,15]:
+				#11 number
+				block_allowed=[11]
+
+        #This is row no. 4
+		elif old_move[0]%4==3:
+			if old_move[1] in [0,4,8,12]:
+				#BLOCK NUMBER 12 in diagram
+				block_allowed=[12]
+			
+			elif old_move[1] in [1,5,9,13]:
+				#13 number
+				block_allowed=[13]
+			elif old_move[1] in [2,6,10,14]:
+				#14 number
+				block_allowed=[14]
+			elif old_move[1] in [3,7, 11,15]:
+				#15 number
+				block_allowed=[15]
+
+		#Also if a block is already decided, we remove it from block_allowed
+		for i in reversed(block_allowed):
+			if board.board_status[i]!='-':
+				block_allowed.remove(i)
+			
+		#return all the empty cells in the block allowed
+		return self.get_empty_cells(board, block_allowed)
+
+
+
+
+	def update_overall_board(self, board, move_ret, fl ):
+		#check if we need to modify block_stat
+
+		block_no = (move_ret[0]/4)*4 + move_ret[1]/4
+
+		updated_block, id1,id2, mflg = -1, block_no/4, block_no%4, 0
+
+		if board.block_status[block_no] == '-':
+			if 
+
 
 	def alpha_beta_pruning(self, board, old_move, alpha, beta, flag , depth):
 		if(depth ==  4)
