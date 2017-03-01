@@ -280,7 +280,8 @@ class player14:
 				Heuristic
 			'''
 			return [old_move[0], old_move[1], self.Winning_Heuristic(board, flag)]
-        coords = self.get_blocks(board, old_move)
+			
+		coords = self.get_blocks(board, old_move)
 
 		if (flag == 1):
 			symbol = 'o'
@@ -362,15 +363,15 @@ class player14:
 		else:
 			flag=0
 
-	coord = tuple(self.alpha_beta_pruning(board, old_move, -10**6-1, 10**6, flag, 0)[0:2])
+		coord = tuple(self.alpha_beta_pruning(board, old_move, -10**6-1, 10**6, flag, 0)[0:2])
 
-	#if old move is (-1,-1)
-	if coord[0] == -1 or coord[0] == -1:
-		coords = self.get_blocks(board, old_move)
-		return coords[random.randrange(len(cells))]
+		#if old move is (-1,-1)
+		if coord[0] == -1 or coord[0] == -1:
+			coords = self.get_blocks(board, old_move)
+			return coords[random.randrange(len(cells))]
 
-	#return move
-	return coord
+		#return move
+		return coord
 
 class Manual_Player:
 	def __init__(self):
