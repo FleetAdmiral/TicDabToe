@@ -130,7 +130,40 @@ class player14:
 		#return all the empty cells in the block allowed
 		return self.get_empty_cells(board, block_allowed)
 
+	def terminal_state_reached(self, board):
+		#CHECK ROW WIN
+		if (board.block_status[0]== board.block_status[1] and board.block_status[1]==board.block_status[2] and board.block_status[2]==board.block_status[3] and board.block_status[1]!='-' and board.block_status[1]!='d') or
+		(board.block_status[4]== board.block_status[5] and board.block_status[5]==board.block_status[6] and board.block_status[6]==board.block_status[7] and board.block_status[4]!='-' and board.block_status[4]!='d') or
+		(board.block_status[8]== board.block_status[9] and board.block_status[9]==board.block_status[10] and board.block_status[10]==board.block_status[11] and board.block_status[8]!='-' and board.block_status[8]!='d') or
+		(board.block_status[12]== board.block_status[13] and board.block_status[13]==board.block_status[14] and board.block_status[14]==board.block_status[15] and board.block_status[12]!='-' and board.block_status[12]!='d'):
+			return True, 'W'
+		
 
+		#Check col win
+		elif (board.block_status[0]== board.block_status[4] and board.block_status[4]==board.block_status[8] and board.block_status[8]==board.block_status[12] and board.block_status[0]!='-' and board.block_status[0]!='d') or
+		(board.block_status[1]== board.block_status[5] and board.block_status[5]==board.block_status[9] and board.block_status[9]==board.block_status[13] and board.block_status[1]!='-' and board.block_status[1]!='d') or
+		(board.block_status[2]== board.block_status[6] and board.block_status[6]==board.block_status[10] and board.block_status[10]==board.block_status[14] and board.block_status[2]!='-' and board.block_status[2]!='d') or
+		(board.block_status[3]== board.block_status[7] and board.block_status[7]==board.block_status[11] and board.block_status[11]==board.block_status[15] and board.block_status[3]!='-' and board.block_status[3]!='d'):
+			return True, 'W'
+		
+		#Check diagonal win
+		elif (board.block_status[0]== board.block_status[5] and board.block_status[5]==board.block_status[10] and board.block_status[10]==board.block_status[15] and board.block_status[0]!='-' and board.block_status[0]!='d') or
+		(board.block_status[3]== board.block_status[6] and board.block_status[6]==board.block_status[9] and board.block_status[9]==board.block_status[12] and board.block_status[3]!='-' and board.block_status[3]!='d'):
+			return True, 'W'
+		
+		else:
+			smflag=0
+			for i in xrange(9):
+				for j in xrange(9):
+					if board.board_status[i][j] == '-' and board.block_status[(i/4)*4 + (j/4)] == '-':
+						smflag =1
+						break
+			
+			if smflag == 1
+			#GAME IS ON BRO
+				return False, 'Continue'
+			else:
+				return False, 'Tie'
 
 
 	def update_overall_board(self, board, move_ret, fl ):
@@ -141,7 +174,15 @@ class player14:
 		updated_block, id1,id2, mflg = -1, block_no/4, block_no%4, 0
 
 		if board.block_status[block_no] == '-':
-			if 
+			if board.board_status[id1*4][id2*4] == board.board_status[id1*4+1][id2*4+1] and boad.board_status[id1*4+1][id2*4+1] == board.board_status[id1*4+2][id2*4+2] and board.board_status[id1*4+1][id2*4+1] != '-':
+				mflg=1
+			if board.board_status[id1*4+2][id2*4] == board.board_status[id1*4+1][id2*4+1] and board.board_status[id1*4+1][id2*4+1] == board.board_status[id1*4][id2*4+ 2] and board.board_status[id1*4+1][id2*4+1] != '-':
+				mflg=1
+
+		#colwise update
+		if mflg !=1:
+			for i in xrange(id2*4, id2*4 + 4):
+				if board.board_status[]
 
 
 	def alpha_beta_pruning(self, board, old_move, alpha, beta, flag , depth):
