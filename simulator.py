@@ -115,86 +115,10 @@ class player14:
 
 
 	def get_blocks(self, board, old_move):
-		#Did not define for_corner variable, check later
-
-		#list of permitted blocks, based on old move
-		block_allowed = []
-
-		#Omitting old moves of corners because we do not have 3 choices
-
-		#We have only one block to choose from anyway, according to the rules
-
-		#this is the first row.
-		if old_move[0]%4==0:
-			if old_move[1] in [1,5,9,13]:
-				#BLOCK NUMBER 1 in diagram
-				block_allowed=[1]
-
-			elif old_move[1] in [0,4,8,12]:
-				#0 number
-				block_allowed=[0]
-			elif old_move[1] in [2,6,10,14]:
-				#2 number
-				block_allowed=[2]
-			elif old_move[1] in [3,7, 11,15]:
-				#3 number
-				block_allowed=[3]
-
-		#This is the second row.
-		elif old_move[0]%4==1:
-			if old_move[1] in [0,4,8,12]:
-				#BLOCK NUMBER 4 in diagram
-				block_allowed=[4]
-
-			elif old_move[1] in [1,5,9,13]:
-				#5 number
-				block_allowed=[5]
-			elif old_move[1] in [2,6,10,14]:
-				#6 number
-				block_allowed=[6]
-			elif old_move[1] in [3,7, 11,15]:
-				#7 number
-				block_allowed=[7]
-
-		#This is row no. 3
-		elif old_move[0]%4==2:
-			if old_move[1] in [0,4,8,12]:
-				#BLOCK NUMBER 8 in diagram
-				block_allowed=[8]
-
-			elif old_move[1] in [1,5,9,13]:
-				#9 number
-				block_allowed=[9]
-			elif old_move[1] in [2,6,10,14]:
-				#10 number
-				block_allowed=[10]
-			elif old_move[1] in [3,7, 11,15]:
-				#11 number
-				block_allowed=[11]
-
-        #This is row no. 4
-		elif old_move[0]%4==3:
-			if old_move[1] in [0,4,8,12]:
-				#BLOCK NUMBER 12 in diagram
-				block_allowed=[12]
-
-			elif old_move[1] in [1,5,9,13]:
-				#13 number
-				block_allowed=[13]
-			elif old_move[1] in [2,6,10,14]:
-				#14 number
-				block_allowed=[14]
-			elif old_move[1] in [3,7, 11,15]:
-				#15 number
-				block_allowed=[15]
-
-		#Also if a block is already decided, we remove it from block_allowed
-		for i in reversed(block_allowed):
-			if board.board_status[i]!='-':
-				block_allowed.remove(i)
-
-		#return all the empty cells in the block allowed
-		return self.get_empty_cells(board, block_allowed)
+		cells=  board.find_valid_move_cells(old_move)
+		print "hooo"
+		print cells
+		return cells
 
 	def terminal_state_reached(self, board):
 		#CHECK ROW WIN
@@ -233,34 +157,41 @@ class player14:
 
 		block_no = (move_ret[0]/4)*4 + move_ret[1]/4
 		updated_block, id1,id2, mflg = -1, block_no/4, block_no%4, 0
-
+		print 'whgooo'
+		print board.board_status
 		if board.block_status[block_no/4][block_no%4] == '-':
-			if board.board_status[id1*4][id2*4] == board.board_status[id1*4+1][id2*4+1] and boad.board_status[id1*4+1][id2*4+1] == board.board_status[id1*4+2][id2*4+2] and board.board_status[id1*4+2][id2*4+2] == board.board_status[id1*4+3][id2*4+3] and  board.board_status[id1*4+1][id2*4+1] != '-':
+			if board.board_status[id1*4][id2*4] == board.board_status[id1*4+1][id2*4+1] and board.board_status[id1*4+1][id2*4+1] == board.board_status[id1*4+2][id2*4+2] and board.board_status[id1*4+2][id2*4+2] == board.board_status[id1*4+3][id2*4+3] and  board.board_status[id1*4+1][id2*4+1] != '-':
 				mflg=1
 			if board.board_status[id1*4+3][id2*4] == board.board_status[id1*4+2][id2*4+1] and board.board_status[id1*4+2][id2*4+1] == board.board_status[id1*4+1][id2*4+2] and board.board_status[id1*4+1][id2*4+2] == board.board_status[id1*4][id2*4+3] and board.board_status[id1*4+3][id2*4] != '-':
 				mflg=1
-
-			#colwise update
+			print "mfg"
+			print mflg
 			if mflg !=1:
-				for i in xrange(id2*4, id2*4 + 4):
+				print 'kaska'
+				for i in range(id2*4, id2*4 + 4):
+					print 'drooska'
 					if board.board_status[id1*4][i] == board.board_status[id1*4 + 1][i] and board.board_status[id1*4 + 1][i] ==board.board_status[id1*4+2][i] and board.board_status[id1*4 + 2][i]==board.board_status[id1*4 + 3][i] and board.board_status[id1*4][i]!= '-':
 						mflg = 1
 						break
 
 			#rowise check for flag
 			if mflg !=1:
-				for i in xrange(id1*4, id1*4 + 4):
-					if board.board_status[i][id1*4] == board.board_status[i][id1*4 + 1][i] and board.board_status[i][id1*4 + 1] ==board.board_status[i][id1*4+2] and board.board_status[i][id1*4 + 2]==board.board_status[i][id1*4 + 3] and board.board_status[i][id1*4]!= '-':
+				for i in range(id1*4, id1*4 + 4):
+					if board.board_status[i][id2*4] == board.board_status[i][id2*4 + 1] and board.board_status[i][id2*4 + 1] ==board.board_status[i][id2*4+2] and board.board_status[i][id2*4 + 2]==board.board_status[i][id2*4 + 3] and board.board_status[i][id2*4]!= '-':
 						mflg = 1
+						print "bazooak"
 						break
-
-		if mflg==1:
-			board.block_status[block_no/4][block_no%4] , updated_block = fl, block_no
+		
+		print "taa"
+		if mflg == 1:
+			board.block_status[block_no/4][block_no%4] =  fl
+			updated_block = block_no
 			return [board.block_status, updated_block]
 
 		#check for draw on the block if not modified
 
 		flag = 0
+		print "holalala"
 		for i in xrange(id1*4, id1*4 + 4):
 			for i in  xrange(id2*4, id2*4 + 4):
 				if board.board_status[i][j] == '-':
@@ -269,9 +200,9 @@ class player14:
 		if flag == 0:
 			#draw
 			board.block_status[block_no/4][block_no%4], updated_block ='d', block_no
-		return [board.block_status, updated_block]
-
-
+		xooxa =  [board.block_status, updated_block]
+		print "xooxa"
+		return xooxa
 
 
 	def alpha_beta_pruning(self, board, old_move, alpha, beta, flag , depth):
@@ -280,23 +211,28 @@ class player14:
 				Heuristic
 			'''
 			return [old_move[0], old_move[1], self.Winning_Heuristic(board, flag)]
-
+		print "geee"
 		coords = self.get_blocks(board, old_move)
-
+		print coords 
 		if (flag == 1):
 			symbol = 'o'
 		else:
 			symbol = 'x'
 
+		print "jjas"
 		if depth%2 == 0:
-
 			''' Max Node '''
 			max_list = [-1, -1 , -100000]
 			for i in coords:
 				a, b = i
+				print "a b "
+				print a, b
+				print board.board_status
 				board.board_status[a][b] = symbol
-
+				print board.board_status[a][b]
 				board.block_status , updated_block = self.update_overall_board(board,(a,b),symbol)
+				print "hahaha"
+				print board.block_status
 				game_state, message =  self.terminal_state_reached(board)
 
 				if game_state:
@@ -364,6 +300,9 @@ class player14:
 		else:
 			flag=0
 
+		if (old_move == (-1,-1)):
+			coord = (5,0)
+			return coord
 		coord = tuple(self.alpha_beta_pruning(board, old_move, -10**6-1, 10**6, flag, 0)[0:2])
 		print 'Hello'
 		print 'Coord is'
@@ -372,9 +311,16 @@ class player14:
 		#if old move is (-1,-1)
 		if coord[0] == -1 or coord[0] == -1:
 			coords = self.get_blocks(board, old_move)
-			return coords[random.randrange(len(cells))]
+			print coords
+			print "hukkk"
+			xy = coords[random.randrange(len(coords))]
+			print "xy"
+			print xy
+			return xy
 
 		#return move
+		print "liyiyikykuyuyu"
+		print coord
 		return coord
 
 class Manual_Player:
@@ -542,6 +488,9 @@ def gameplay(obj1, obj2):				#game simulator
 
 		try:									#try to get player 1's move
 			p1_move = obj1.move(game_board, old_move, fl1)
+
+			print "p1 ka move is " 
+			print p1_move
 		except TimedOutExc:					#timeout error
 #			print e
 			WINNER = 'P2'

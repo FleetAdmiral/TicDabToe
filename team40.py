@@ -215,8 +215,8 @@ class Player40:
 			return [old_move[0], old_move[1], self.Winning_Heurisitic(temp_board, board_stat, flag)]
 			
 		cells = self.get_blocks(temp_board, board_stat, old_move)
-		print "cell is " 
-		print cells
+		#print "cell is " 
+		#print cells
 		
 		symbol = 'o' if flag else 'x'
 		if depth%2 == 0:
@@ -282,7 +282,9 @@ class Player40:
 		cell = tuple(self.alpha_beta_pruning(temp_board, temp_block, old_move, -10**6-1, 10**6, flag, 0)[0:2])
 		if cell[0] == -1 or cell[1] == -1:
 			cells = self.get_blocks(temp_board, temp_block, old_move)
-			return cells[random.randrange(len(cells))] 
+			xy = cells[random.randrange(len(cells))] 
+			print "xy"
+			print xy
 		return cell
 
 	def get_empty_cells(self,gameb, blal, block_stat):
