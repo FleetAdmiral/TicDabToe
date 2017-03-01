@@ -209,7 +209,7 @@ class player14:
 
 
 	def alpha_beta_pruning(self, board, old_move, alpha, beta, flag , depth):
-		if(depth ==  4):
+		if(depth ==  3):
 			'''
 				Heuristic
 			'''
