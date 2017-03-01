@@ -280,7 +280,7 @@ class player14:
 				Heuristic
 			'''
 			return [old_move[0], old_move[1], self.Winning_Heuristic(board, flag)]
-			
+
 		coords = self.get_blocks(board, old_move)
 
 		if (flag == 1):
@@ -289,6 +289,7 @@ class player14:
 			symbol = 'x'
 
 		if depth%2 == 0:
+
 			''' Max Node '''
 			max_list = [-1, -1 , -100000]
 			for i in coords:
@@ -317,7 +318,7 @@ class player14:
 
 				if (beta <= alpha):
 					break
-
+			print max_list
 			return max_list
 		else:
 			'''Min Node '''
@@ -364,7 +365,10 @@ class player14:
 			flag=0
 
 		coord = tuple(self.alpha_beta_pruning(board, old_move, -10**6-1, 10**6, flag, 0)[0:2])
-
+		print 'Hello'
+		print 'Coord is'
+		print coord[0]
+		print coord[1]
 		#if old move is (-1,-1)
 		if coord[0] == -1 or coord[0] == -1:
 			coords = self.get_blocks(board, old_move)
@@ -517,7 +521,6 @@ class Board:
 		return 'SUCCESSFUL'
 
 def gameplay(obj1, obj2):				#game simulator
-
 	game_board = Board() #Equivalent: 	game_board, block_stat = get_init_board_and_blockstatus()
 
 	fl1 = 'x'
