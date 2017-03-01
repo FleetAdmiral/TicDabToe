@@ -116,8 +116,8 @@ class player14:
 
 	def get_blocks(self, board, old_move):
 		cells=  board.find_valid_move_cells(old_move)
-		print "hooo"
-		print cells
+		#print "hooo"
+		#print cells
 		return cells
 
 	def terminal_state_reached(self, board):
@@ -157,19 +157,19 @@ class player14:
 
 		block_no = (move_ret[0]/4)*4 + move_ret[1]/4
 		updated_block, id1,id2, mflg = -1, block_no/4, block_no%4, 0
-		print 'whgooo'
-		print board.board_status
+		#print 'whgooo'
+		#print board.board_status
 		if board.block_status[block_no/4][block_no%4] == '-':
 			if board.board_status[id1*4][id2*4] == board.board_status[id1*4+1][id2*4+1] and board.board_status[id1*4+1][id2*4+1] == board.board_status[id1*4+2][id2*4+2] and board.board_status[id1*4+2][id2*4+2] == board.board_status[id1*4+3][id2*4+3] and  board.board_status[id1*4+1][id2*4+1] != '-':
 				mflg=1
 			if board.board_status[id1*4+3][id2*4] == board.board_status[id1*4+2][id2*4+1] and board.board_status[id1*4+2][id2*4+1] == board.board_status[id1*4+1][id2*4+2] and board.board_status[id1*4+1][id2*4+2] == board.board_status[id1*4][id2*4+3] and board.board_status[id1*4+3][id2*4] != '-':
 				mflg=1
-			print "mfg"
-			print mflg
+			#print "mfg"
+			#print mflg
 			if mflg !=1:
-				print 'kaska'
+				#print 'kaska'
 				for i in range(id2*4, id2*4 + 4):
-					print 'drooska'
+					#print 'drooska'
 					if board.board_status[id1*4][i] == board.board_status[id1*4 + 1][i] and board.board_status[id1*4 + 1][i] ==board.board_status[id1*4+2][i] and board.board_status[id1*4 + 2][i]==board.board_status[id1*4 + 3][i] and board.board_status[id1*4][i]!= '-':
 						mflg = 1
 						break
@@ -179,10 +179,10 @@ class player14:
 				for i in range(id1*4, id1*4 + 4):
 					if board.board_status[i][id2*4] == board.board_status[i][id2*4 + 1] and board.board_status[i][id2*4 + 1] ==board.board_status[i][id2*4+2] and board.board_status[i][id2*4 + 2]==board.board_status[i][id2*4 + 3] and board.board_status[i][id2*4]!= '-':
 						mflg = 1
-						print "bazooak"
+						#print "bazooak"
 						break
 		
-		print "taa"
+		#print "taa"
 		if mflg == 1:
 			board.block_status[block_no/4][block_no%4] =  fl
 			updated_block = block_no
@@ -191,17 +191,20 @@ class player14:
 		#check for draw on the block if not modified
 
 		flag = 0
-		print "holalala"
-		for i in xrange(id1*4, id1*4 + 4):
-			for i in  xrange(id2*4, id2*4 + 4):
+		#print "holalala"
+
+		for i in range(id1*4, id1*4 + 4):
+			for j in  range(id2*4, id2*4 + 4):
 				if board.board_status[i][j] == '-':
 					flag = 1
 					break
+		#print "flag hai yeh"
+		#print flag
 		if flag == 0:
 			#draw
 			board.block_status[block_no/4][block_no%4], updated_block ='d', block_no
 		xooxa =  [board.block_status, updated_block]
-		print "xooxa"
+		#print "xooxa"
 		return xooxa
 
 
@@ -211,28 +214,28 @@ class player14:
 				Heuristic
 			'''
 			return [old_move[0], old_move[1], self.Winning_Heuristic(board, flag)]
-		print "geee"
+		#print "geee"
 		coords = self.get_blocks(board, old_move)
-		print coords 
+		#print coords 
 		if (flag == 1):
 			symbol = 'o'
 		else:
 			symbol = 'x'
 
-		print "jjas"
+		#print "jjas"
 		if depth%2 == 0:
 			''' Max Node '''
 			max_list = [-1, -1 , -100000]
 			for i in coords:
 				a, b = i
-				print "a b "
-				print a, b
-				print board.board_status
+				#print "a b "
+				#print a, b
+				#print board.board_status
 				board.board_status[a][b] = symbol
-				print board.board_status[a][b]
+				#print board.board_status[a][b]
 				board.block_status , updated_block = self.update_overall_board(board,(a,b),symbol)
-				print "hahaha"
-				print board.block_status
+				#print "hahaha"
+				#print board.block_status
 				game_state, message =  self.terminal_state_reached(board)
 
 				if game_state:
@@ -254,7 +257,7 @@ class player14:
 
 				if (beta <= alpha):
 					break
-			print max_list
+			#print max_list
 			return max_list
 		else:
 			'''Min Node '''
@@ -299,28 +302,29 @@ class player14:
 			flag=1
 		else:
 			flag=0
-
+		#print "oldaa movaa"
+		#print old_move
 		if (old_move == (-1,-1)):
 			coord = (5,0)
 			return coord
 		coord = tuple(self.alpha_beta_pruning(board, old_move, -10**6-1, 10**6, flag, 0)[0:2])
-		print 'Hello'
-		print 'Coord is'
-		print coord[0]
-		print coord[1]
+		#print 'Hello'
+		#print 'Coord is'
+		#print coord[0]
+		#print coord[1]
 		#if old move is (-1,-1)
 		if coord[0] == -1 or coord[0] == -1:
 			coords = self.get_blocks(board, old_move)
-			print coords
-			print "hukkk"
+			#print coords
+			#print "hukkk"
 			xy = coords[random.randrange(len(coords))]
-			print "xy"
-			print xy
+			#print "xy"
+			#print xy
 			return xy
 
 		#return move
-		print "liyiyikykuyuyu"
-		print coord
+		#print "liyiyikykuyuyu"
+		#print coord
 		return coord
 
 class Manual_Player:
