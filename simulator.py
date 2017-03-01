@@ -26,10 +26,76 @@ class player14:
 	def __init__(self):
 		pass
 
-	def get_empty_cells(self, board, bla1):
+	def Winning_Heuristic(self, board, flag):
+		game_state, message = self.terminal_state_reached(board)
+
+		if game_state == True:
+			if message != 'D':
+				return 100000 if flag ==1 else -100000
+			else:
+				return 0
+		
+		start_row, start_col, ret = 0,0,0
+		
+		if flag == 0
+			flag, opponent_flag = 'x', 'o'
+		else:
+			flag, opponent_flag = 'o', 'x'
+		
+		POSSIBLE_WIN_SEQUENCES = [(0,1,2,3), (4,5,6,7), (8,9,10,11), (12,13,14,15),  (0,4,5,12), (1,5,9,13), (2,6,10,14), (3,7,11,15), (0,5,10,15), (3,6,9,12) ]
+
+		for seq in POSSIBLE_WIN_SEQUENCES:
+			temp_seq = [board.block_status[index/4][index%4] for index in seq if board.block_status[index/4][index%4] != '-' and board.block_status[index/4][index%4] != 'd'
+
+			if flag in temp_seq:
+				if opponent_flag in temp_seq:
+					continue
+				if len(temp_seq) > 1:
+					ret+=7
+				ret+=1
+			elif opponent_flag in temp_seq:
+				if len(temp_seq) > 1:
+					ret-=7
+				ret-=1
+		ret = ret *23
+
+
+		for i in xrange(16):
+			if board.block_status[i/4][i%4] == 'd':
+				start_col = (start_col + 4) % 16
+				if start_col == 0:
+					start_row += 4
+				continue
+			elif board.block_status[i/4][i%4] == '-':
+				temp_block = [ row[start_row:start_row + 4] for row in board.board_status[start_col:start_col+4] ]
+
+				for seq in POSSIBLE_WIN_SEQUENCES:
+					temp_seq =  [board.board_status[index/4][index%4] for index in seq if board.board_status[index/4][index%4] != '-']
+					if flag in temp_seq:
+						if opponent_flag in temp_seq:
+							continue
+						if len(temp_seq) > 1:
+							ret += 7
+						ret += 1
+					elif opponent_flag in temp_seq:
+						if len(temp_seq) > 1:
+							ret -= 7
+						ret -=1
+			elif flag == board.block_status[i/4][i%4]:
+				ret +=8
+			else:
+				ret -=8
+
+
+			start_col = (start_col + 4) % 16
+			if start_col == 0:
+				start_row += 4
+		
+		return ret
+
+    def get_empty_cells(self, board, bla1):
 		cells = [] #list of tuples that are allowed
 		#Iterate over all the blocks that are possible, in this case it is only 1 and get all the empty cells
-
 		for x in bla1:
 			id1 = x/4
 			id2 = x%4
@@ -43,7 +109,7 @@ class player14:
 			for i in range(16):
 				for j in range(16):
 					no = (i/4)*4 + j/4
-					if board.board_status == '-' and board.block_status[no] == '-':
+					if board.board_status == '-' and board.block_status[no/4][no%4] == '-':
 						cells.append((i,j))
 		return cells
 
@@ -132,7 +198,7 @@ class player14:
 
 	def terminal_state_reached(self, board):
 		#CHECK ROW WIN
-		if (board.block_status[0]== board.block_status[1] and board.block_status[1]==board.block_status[2] and board.block_status[2]==board.block_status[3] and board.block_status[1]!='-' and board.block_status[1]!='d') or
+		if (board.block_status[0/4][0%4]== board.block_status[1] and board.block_status[1]==board.block_status[2] and board.block_status[2]==board.block_status[3] and board.block_status[1]!='-' and board.block_status[1]!='d') or
 		(board.block_status[4]== board.block_status[5] and board.block_status[5]==board.block_status[6] and board.block_status[6]==board.block_status[7] and board.block_status[4]!='-' and board.block_status[4]!='d') or
 		(board.block_status[8]== board.block_status[9] and board.block_status[9]==board.block_status[10] and board.block_status[10]==board.block_status[11] and board.block_status[8]!='-' and board.block_status[8]!='d') or
 		(board.block_status[12]== board.block_status[13] and board.block_status[13]==board.block_status[14] and board.block_status[14]==board.block_status[15] and board.block_status[12]!='-' and board.block_status[12]!='d'):
@@ -170,20 +236,47 @@ class player14:
 		#check if we need to modify block_stat
 
 		block_no = (move_ret[0]/4)*4 + move_ret[1]/4
-
 		updated_block, id1,id2, mflg = -1, block_no/4, block_no%4, 0
 
 		if board.block_status[block_no] == '-':
-			if board.board_status[id1*4][id2*4] == board.board_status[id1*4+1][id2*4+1] and boad.board_status[id1*4+1][id2*4+1] == board.board_status[id1*4+2][id2*4+2] and board.board_status[id1*4+1][id2*4+1] != '-':
+			if board.board_status[id1*4][id2*4] == board.board_status[id1*4+1][id2*4+1] and boad.board_status[id1*4+1][id2*4+1] == board.board_status[id1*4+2][id2*4+2] and board.board_status[id1*4+2][id2*4+2] == board.board_status[id1*4+3][id2*4+3] and  board.board_status[id1*4+1][id2*4+1] != '-':
 				mflg=1
-			if board.board_status[id1*4+2][id2*4] == board.board_status[id1*4+1][id2*4+1] and board.board_status[id1*4+1][id2*4+1] == board.board_status[id1*4][id2*4+ 2] and board.board_status[id1*4+1][id2*4+1] != '-':
+			if board.board_status[id1*4+3][id2*4] == board.board_status[id1*4+2][id2*4+1] and board.board_status[id1*4+2][id2*4+1] == board.board_status[id1*4+1][id2*4+2] and board.board_status[id1*4+1][id2*4+2] == board.board_status[id1*4][id2*4+3] and board.board_status[id1*4+3][id2*4] != '-':
 				mflg=1
 
-		#colwise update
-		if mflg !=1:
-			for i in xrange(id2*4, id2*4 + 4):
-				if board.board_status[]
+			#colwise update
+			if mflg !=1:
+				for i in xrange(id2*4, id2*4 + 4):
+					if board.board_status[id1*4][i] == board.board_status[id1*4 + 1][i] and board.board_status[id1*4 + 1][i] ==board.board_status[id1*4+2][i] and board.board_status[id1*4 + 2][i]==board.board_status[id1*4 + 3][i] and board.board_status[id1*4][i]!= '-':
+						mflg = 1
+						break
+		
+			#rowise check for flag
+			if mflg !=1:
+				for i in xrange(id1*4, id1*4 + 4):
+					if board.board_status[i][id1*4] == board.board_status[i][id1*4 + 1][i] and board.board_status[i][id1*4 + 1] ==board.board_status[i][id1*4+2] and board.board_status[i][id1*4 + 2]==board.board_status[i][id1*4 + 3] and board.board_status[i][id1*4]!= '-':
+						mflg = 1
+						break
+		
+		if mflg==1:
+			board.block_status[block_no] , updated_block = fl, block_no
+			return [board.block_status, updated_block]
 
+		#check for draw on the block if not modified
+
+		flag = 0
+		for i in xrange(id1*4, id1*4 + 4):
+			for i in  xrange(id2*4, id2*4 + 4):
+				if board.board_status[i][j] == '-':
+					flag = 1
+					break
+		if flag == 0:
+			#draw
+			board.block_status[block_no], updated_block ='d', block_no
+		return [board.block_status, updated_block]
+
+
+		
 
 	def alpha_beta_pruning(self, board, old_move, alpha, beta, flag , depth):
 		if(depth ==  4)
@@ -287,11 +380,6 @@ class player14:
 	
 	#return move
 	return coord
-
-
-
-
-
 
 class Manual_Player:
 	def __init__(self):
