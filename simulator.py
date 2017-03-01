@@ -45,14 +45,14 @@ class player14:
 		POSSIBLE_WIN_SEQUENCES = [(0,1,2,3), (4,5,6,7), (8,9,10,11), (12,13,14,15),  (0,4,5,12), (1,5,9,13), (2,6,10,14), (3,7,11,15), (0,5,10,15), (3,6,9,12) ]
 
 		for seq in POSSIBLE_WIN_SEQUENCES:
-			temp_seq = [board.block_status[index/4][index%4] for index in seq if board.block_status[index/4][index%4] != '-' and board.block_status[index/4][index%4] != 'd'
+			temp_seq = [board.block_status[index/4][index%4] for index in seq if board.block_status[index/4][index%4] != '-' and board.block_status[index/4][index%4] != 'd']
 
 			if flag in temp_seq:
 			    if opponent_flag in temp_seq:
 					continue
-				if len(temp_seq) > 1:
+			    if len(temp_seq) > 1:
 					ret+=7
-				ret+=1
+			    ret+=1
 			elif opponent_flag in temp_seq:
 				if len(temp_seq) > 1:
 					ret-=7
@@ -93,7 +93,7 @@ class player14:
 
 		return ret
 
-    def get_empty_cells(self, board, bla1):
+	def get_empty_cells(self, board, bla1):
 		cells = [] #list of tuples that are allowed
 		#Iterate over all the blocks that are possible, in this case it is only 1 and get all the empty cells
 		for x in bla1:
@@ -198,23 +198,19 @@ class player14:
 
 	def terminal_state_reached(self, board):
 		#CHECK ROW WIN
-		if (board.block_status[0/4][0%4]== board.block_status[1/4][1%4]] and board.block_status[1/4][1%4]==board.block_status[2/4][2%4] and board.block_status[2/4][2%4]==board.block_status[3/4][3%4] and board.block_status[1/4][1%4]!='-' and board.block_status[1/4][1%4]!='d') or
-		(board.block_status[4/4][4%4]== board.block_status[5/4][5%4] and board.block_status[5/4][5%4]==board.block_status[6/4][6%4] and board.block_status[6/4][6%4]==board.block_status[7/4][7%4] and board.block_status[4/4][4%4]!='-' and board.block_status[4/4][4%4]!='d') or
-		(board.block_status[8/4][8%4]== board.block_status[9/4][9%4] and board.block_status[9/4][9%4]==board.block_status[10/4][10%4] and board.block_status[10/4][10%4]==board.block_status[11/4][11%4] and board.block_status[8/4][8%4]!='-' and board.block_status[8/4][8%4]!='d') or
-		(board.block_status[12/4][12%4]== board.block_status[13/4][13%4] and board.block_status[13/4][13%4]==board.block_status[14/4][14%4] and board.block_status[14/4][14%4]==board.block_status[15/4][15%4] and board.block_status[12/4][12%4]!='-' and board.block_status[12/4][12%4]!='d'):
+		if ((board.block_status[(0/4)][0%4]== board.block_status[1/4][1%4] and board.block_status[1/4][1%4]==board.block_status[2/4][2%4] and board.block_status[2/4][2%4]==board.block_status[3/4][3%4] and board.block_status[1/4][1%4]!='-' and board.block_status[1/4][1%4]!='d') or (board.block_status[4/4][4%4]== board.block_status[5/4][5%4] and board.block_status[5/4][5%4]==board.block_status[6/4][6%4] and board.block_status[6/4][6%4]==board.block_status[7/4][7%4] and board.block_status[4/4][4%4]!='-' and board.block_status[4/4][4%4]!='d') or (board.block_status[8/4][8%4]== board.block_status[9/4][9%4] and board.block_status[9/4][9%4]==board.block_status[10/4][10%4] and board.block_status[10/4][10%4]==board.block_status[11/4][11%4] and board.block_status[8/4][8%4]!='-' and board.block_status[8/4][8%4]!='d') or (board.block_status[12/4][12%4]== board.block_status[13/4][13%4] and board.block_status[13/4][13%4]==board.block_status[14/4][14%4] and board.block_status[14/4][14%4]==board.block_status[15/4][15%4] and board.block_status[12/4][12%4]!='-' and board.block_status[12/4][12%4]!='d')):
+
 			return True, 'W'
 
 
 		#Check col win
-		elif (board.block_status[0/4][0%4]== board.block_status[4/4][4%4] and board.block_status[4/4][4%4]==board.block_status[8/4][8%4] and board.block_status[8/4][8%4]==board.block_status[12/4][12%4] and board.block_status[0/4][0%4]!='-' and board.block_status[0/4][0%4]!='d') or
-		(board.block_status[1/4][1%4]== board.block_status[5/4][5%4] and board.block_status[5/4][5%4]==board.block_status[9/4][9%4] and board.block_status[9/4][9%4]==board.block_status[13/4][13%4] and board.block_status[1/4][1%4]!='-' and board.block_status[1/4][1%4]!='d') or
-		(board.block_status[2/4][2%4]== board.block_status[6/4][6%4] and board.block_status[6/4][6%4]==board.block_status[10/4][10%4] and board.block_status[10/4][10%4]==board.block_status[14/4][14%4] and board.block_status[2/4][2%4]!='-' and board.block_status[2/4][2%4]!='d') or
-		(board.block_status[3/4][3%4]== board.block_status[7/4][7%4] and board.block_status[7/4][7%4]==board.block_status[11/4][11%4] and board.block_status[11/4][11%4]==board.block_status[15/4][15%4] and board.block_status[3/4][3%4]!='-' and board.block_status[3/4][3%4]!='d'):
+		elif (board.block_status[0/4][0%4]== board.block_status[4/4][4%4] and board.block_status[4/4][4%4]==board.block_status[8/4][8%4] and board.block_status[8/4][8%4]==board.block_status[12/4][12%4] and board.block_status[0/4][0%4]!='-' and board.block_status[0/4][0%4]!='d') or (board.block_status[1/4][1%4]== board.block_status[5/4][5%4] and board.block_status[5/4][5%4]==board.block_status[9/4][9%4] and board.block_status[9/4][9%4]==board.block_status[13/4][13%4] and board.block_status[1/4][1%4]!='-' and board.block_status[1/4][1%4]!='d') or (board.block_status[2/4][2%4]== board.block_status[6/4][6%4] and board.block_status[6/4][6%4]==board.block_status[10/4][10%4] and board.block_status[10/4][10%4]==board.block_status[14/4][14%4] and board.block_status[2/4][2%4]!='-' and board.block_status[2/4][2%4]!='d') or (board.block_status[3/4][3%4]== board.block_status[7/4][7%4] and board.block_status[7/4][7%4]==board.block_status[11/4][11%4] and board.block_status[11/4][11%4]==board.block_status[15/4][15%4] and board.block_status[3/4][3%4]!='-' and board.block_status[3/4][3%4]!='d'):
+
 			return True, 'W'
 
 		#Check diagonal win
-		elif (board.block_status[0/4][0%4]== board.block_status[5/4][5%4] and board.block_status[5/4][5%4]==board.block_status[10/4][10%4] and board.block_status[10/4][10%4]==board.block_status[15/4][15%4] and board.block_status[0/4][0%4]!='-' and board.block_status[0/4][0%4]!='d') or
-		(board.block_status[3/4][3%4]== board.block_status[6/4][6%4] and board.block_status[6/4][6%4]==board.block_status[9/4][9%4] and board.block_status[9/4][9%4]==board.block_status[12/4][12%4] and board.block_status[3/4][3%4]!='-' and board.block_status[3/4][3%4]!='d'):
+		elif (board.block_status[0/4][0%4]== board.block_status[5/4][5%4] and board.block_status[5/4][5%4]==board.block_status[10/4][10%4] and board.block_status[10/4][10%4]==board.block_status[15/4][15%4] and board.block_status[0/4][0%4]!='-' and board.block_status[0/4][0%4]!='d') or (board.block_status[3/4][3%4]== board.block_status[6/4][6%4] and board.block_status[6/4][6%4]==board.block_status[9/4][9%4] and board.block_status[9/4][9%4]==board.block_status[12/4][12%4] and board.block_status[3/4][3%4]!='-' and board.block_status[3/4][3%4]!='d'):
+
 			return True, 'W'
 
 		else:
@@ -225,7 +221,7 @@ class player14:
 						smflag =1
 						break
 
-			if smflag == 1
+			if smflag == 1:
 			#GAME IS ON BRO
 				return False, 'Continue'
 			else:
@@ -279,25 +275,20 @@ class player14:
 
 
 	def alpha_beta_pruning(self, board, old_move, alpha, beta, flag , depth):
-		if(depth ==  4)
+		if(depth ==  4):
 			'''
 				Heuristic
 			'''
 			return [old_move[0], old_move[1], self.Winning_Heuristic(board, flag)]
-
-
         coords = self.get_blocks(board, old_move)
-		print "cell is "
-		print coords
 
-		if flag == 1:
+		if (flag == 1):
 			symbol = 'o'
-		else
+		else:
 			symbol = 'x'
 
 		if depth%2 == 0:
 			''' Max Node '''
-
 			max_list = [-1, -1 , -100000]
 			for i in coords:
 				a, b = i
