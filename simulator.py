@@ -3,6 +3,8 @@ import random
 import signal
 import time
 import copy
+import datetime
+
 
 class TimedOutExc(Exception):
 	pass
@@ -10,6 +12,8 @@ class TimedOutExc(Exception):
 def handler(signum, frame):
 	#print 'Signal handler called with signal', signum
 	raise TimedOutExc()
+
+
 
 class Random_Player():
 	def __init__(self):
@@ -305,8 +309,8 @@ class player14:
 		#print "oldaa movaa"
 		#print old_move
 		if (old_move == (-1,-1)):
-			coord = (5,0)
-			return coord
+			coords = board.find_valid_move_cells(old_move)
+			return coords[random.randrange(len(coords))]
 		coord = tuple(self.alpha_beta_pruning(board, old_move, -10**6-1, 10**6, flag, 0)[0:2])
 		#print 'Hello'
 		#print 'Coord is'
@@ -615,12 +619,12 @@ if __name__ == '__main__':
 	obj2 = ''
 	option = sys.argv[1]
 	if option == '1':
-		obj1 = Random_Player()
+		obj1 = player14()
 		obj2 = Random_Player()
 
 	elif option == '2':
 		obj1 = player14()
-		obj2 = Random_Player()
+		obj2 = Player1()
 	elif option == '3':
 		obj1 = Manual_Player()
 		obj2 = Manual_Player()
