@@ -1,6 +1,9 @@
 import random
+import time
+
 class player14:
 	def __init__(self):
+		self.init_time = time.time()
 		pass
 
 	def Winning_Heuristic(self, board, flag):
@@ -195,8 +198,18 @@ class player14:
 		return xooxa
 
 
-	def alpha_beta_pruning(self, board, old_move, alpha, beta, flag , depth):
-		if(depth ==  4):
+	def alpha_beta_pruning(self, board, old_move, alpha, beta, flag , depth, fin_depth, init_time):
+		now_time = time.time()
+		#print "ahaa"
+		#print now_time
+		#print "Ok"
+		#print init_time
+		#print "now"
+		#print (now_time - init_time)
+		#print now_time.seconds - initial_time.seconds
+		if((now_time - init_time)>= 13):
+			return [-100,100, -100000]
+		if(depth ==  fin_depth):
 			'''
 				Heuristic
 			'''
@@ -232,7 +245,7 @@ class player14:
 						board.block_status[updated_block/4][updated_block%4] = '-'
 					return [a, b, 10000]
 
-				val = self.alpha_beta_pruning(board, (a,b), alpha, beta, flag^1, depth+1)
+				val = self.alpha_beta_pruning(board, (a,b), alpha, beta, flag^1, depth+1, fin_depth, init_time)
 
 				if(val[2] > max_list[2]):
 					max_list[0], max_list[1], max_list[2] =a , b , val[2];
@@ -265,7 +278,7 @@ class player14:
 						board.block_status[updated_block/4][updated_block%4] = '-'
 					return [a, b, -10000]
 
-				val = self.alpha_beta_pruning(board, (a,b), alpha, beta, flag^1, depth+1)
+				val = self.alpha_beta_pruning(board, (a,b), alpha, beta, flag^1, depth+1, fin_depth, init_time)
 
 				if(val[2] <= min_list[2]):
 					min_list[0], min_list[1], min_list[2] =a , b , val[2];
@@ -286,6 +299,7 @@ class player14:
 
 
 	def move(self, board, old_move, flag):
+		init_time = time.time()
 		if flag == 'x':
 			flag=1
 		else:
@@ -294,9 +308,15 @@ class player14:
 		#print old_move
 		if (old_move == (-1,-1)):
 			coords = board.find_valid_move_cells(old_move)
-			return (15,14)
+			return (13,14)
 			#return coords[random.randint(0,len(coords))]
-		coord = tuple(self.alpha_beta_pruning(board, old_move, -10**6-1, 10**6, flag, 0)[0:2])
+		old_coords=[]
+		for i in range(1,7):
+			coord = tuple(self.alpha_beta_pruning(board, old_move, -10**6-1, 10**6, flag, 0, i, init_time)[0:2])
+			if(coord[0]==-100):
+				print "Oh no"
+				break
+			old1_coords = coord
 		#print 'Hello'
 		#print 'Coord is'
 		#print coord[0]
@@ -314,4 +334,4 @@ class player14:
 		#return move
 		#print "liyiyikykuyuyu"
 		#print coord
-		return coord
+		return old1_coords
