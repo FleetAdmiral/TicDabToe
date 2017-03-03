@@ -29,9 +29,9 @@ class player14:
 					ret-=1
 					continue
 			    if (len(temp_seq) > 1):
-					ret+=7
+					ret+=55
 					if (len(temp_seq))==3:
-						ret+=25
+						ret+=100
 			    ret+=1
 			elif opponent_flag in temp_seq:
 				if len(temp_seq) > 1:
@@ -55,18 +55,18 @@ class player14:
 					temp_seq =  [board.board_status[index/4][index%4] for index in seq if board.board_status[index/4][index%4] != '-']
 					if flag in temp_seq:
 						if opponent_flag in temp_seq:
-							ret-=4
+							ret-=1
 							continue
 						if len(temp_seq) ==2:
-							ret += 7
+							ret += 50
 						if len(temp_seq) == 3:
-							ret+=25
+							ret+=100
 						ret += 1
 					elif opponent_flag in temp_seq:
 						if len(temp_seq) == 2:
-							ret -= 7
+							ret -= 51
 						elif len(temp_seq)==3:
-							ret-=6
+							ret-=101
 						ret -=1
 			elif flag == board.block_status[i/4][i%4]:
 				ret +=8
@@ -294,7 +294,8 @@ class player14:
 		#print old_move
 		if (old_move == (-1,-1)):
 			coords = board.find_valid_move_cells(old_move)
-			return coords[random.randint(0,len(coords))]
+			return (15,14)
+			#return coords[random.randint(0,len(coords))]
 		coord = tuple(self.alpha_beta_pruning(board, old_move, -10**6-1, 10**6, flag, 0)[0:2])
 		#print 'Hello'
 		#print 'Coord is'
