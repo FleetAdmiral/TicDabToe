@@ -19,20 +19,25 @@ class player14:
 		else:
 			flag, opponent_flag = 'o', 'x'
 
-		POSSIBLE_WIN_SEQUENCES = [(0,1,2,3), (4,5,6,7), (8,9,10,11), (12,13,14,15),  (0,4,5,12), (1,5,9,13), (2,6,10,14), (3,7,11,15), (0,5,10,15), (3,6,9,12) ]
+		POSSIBLE_WIN_SEQUENCES = [(8,9,10,11), (12,13,14,15), (0,1,2,3), (4,5,6,7),  (0,4,8,12), (1,5,9,13), (2,6,10,14), (3,7,11,15), (0,5,10,15), (3,6,9,12) ]
 
 		for seq in POSSIBLE_WIN_SEQUENCES:
 			temp_seq = [board.block_status[index/4][index%4] for index in seq if board.block_status[index/4][index%4] != '-' and board.block_status[index/4][index%4] != 'd']
 
 			if flag in temp_seq:
 			    if opponent_flag in temp_seq:
+					ret-=1
 					continue
-			    if len(temp_seq) > 1:
+			    if (len(temp_seq) > 1):
 					ret+=7
+					if (len(temp_seq))==3:
+						ret+=25
 			    ret+=1
 			elif opponent_flag in temp_seq:
 				if len(temp_seq) > 1:
 					ret-=7
+					if(len(temp_seq) == 3):
+						ret-=40
 				ret-=1
 		ret = ret *23
 
@@ -50,13 +55,18 @@ class player14:
 					temp_seq =  [board.board_status[index/4][index%4] for index in seq if board.board_status[index/4][index%4] != '-']
 					if flag in temp_seq:
 						if opponent_flag in temp_seq:
+							ret-=4
 							continue
-						if len(temp_seq) > 1:
+						if len(temp_seq) ==2:
 							ret += 7
+						if len(temp_seq) == 3:
+							ret+=25
 						ret += 1
 					elif opponent_flag in temp_seq:
-						if len(temp_seq) > 1:
+						if len(temp_seq) == 2:
 							ret -= 7
+						elif len(temp_seq)==3:
+							ret-=6
 						ret -=1
 			elif flag == board.block_status[i/4][i%4]:
 				ret +=8
@@ -186,7 +196,7 @@ class player14:
 
 
 	def alpha_beta_pruning(self, board, old_move, alpha, beta, flag , depth):
-		if(depth ==  3):
+		if(depth ==  4):
 			'''
 				Heuristic
 			'''
