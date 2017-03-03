@@ -321,12 +321,12 @@ if __name__ == '__main__':
 	obj2 = ''
 	option = sys.argv[1]
 	if option == '1':
-		obj1 = player14()
-		obj2 = Player43()
+		obj1 = Player43()
+		obj2 = player14()
 
 	elif option == '2':
-		obj1 = player14()
-		obj2 = Player54()
+		obj1 = Aragon()
+		obj2 = player14()
 	elif option == '3':
 		obj1 = player14()
 		obj2 = Player39()
