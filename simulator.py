@@ -7,6 +7,10 @@ import datetime
 from player14 import player14
 from team46 import Player46
 from team8 import Player8
+from team39 import Player39
+from team54_arjun import Player54
+from dunedain import Aragon
+from team43 import *
 
 class TimedOutExc(Exception):
 	pass
@@ -318,14 +322,14 @@ if __name__ == '__main__':
 	option = sys.argv[1]
 	if option == '1':
 		obj1 = player14()
-		obj2 = Player8()
+		obj2 = Player43()
 
 	elif option == '2':
 		obj1 = player14()
-		obj2 = Player46()
+		obj2 = Player54()
 	elif option == '3':
-		obj1 = Player46()
-		obj2 = player14()
+		obj1 = player14()
+		obj2 = Player39()
 	else:
 		print 'Invalid option'
 		sys.exit(1)

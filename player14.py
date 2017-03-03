@@ -53,7 +53,6 @@ class player14:
 				continue
 			elif board.block_status[i/4][i%4] == '-':
 				temp_block = [ row[start_row:start_row + 4] for row in board.board_status[start_col:start_col+4] ]
-
 				for seq in POSSIBLE_WIN_SEQUENCES:
 					temp_seq =  [board.board_status[index/4][index%4] for index in seq if board.board_status[index/4][index%4] != '-']
 					if flag in temp_seq:
