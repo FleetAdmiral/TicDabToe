@@ -4,7 +4,7 @@ import signal
 import time
 import copy
 import datetime
-from player14 import player14
+from Player14 import Player14
 from team46 import Player46
 from team8 import Player8
 from team39 import Player39
@@ -321,12 +321,12 @@ if __name__ == '__main__':
 	obj2 = ''
 	option = sys.argv[1]
 	if option == '1':
-		obj1 = Player43()
-		obj2 = player14()
+		obj1 = Player14()
+		obj2 = Player8()
 
 	elif option == '2':
-		obj1 = Aragon()
-		obj2 = player14()
+		obj1 = Player8()
+		obj2 = Player14()
 	elif option == '3':
 		obj1 = player14()
 		obj2 = Player39()

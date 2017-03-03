@@ -1,7 +1,7 @@
 import random
 import time
 
-class player14:
+class Player14:
 	def __init__(self):
 		self.init_time = time.time()
 		pass
