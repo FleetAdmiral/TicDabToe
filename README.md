@@ -1,7 +1,7 @@
-# INTELLIGENT TIC-TAC-TOE
+# TicDabToe
 
 ## Description
-● Ultimate TicTacToe is an extension of the 4x4 TicTacToe(which is an extension of 3x3
+● TicDabToe is an extension of the 4x4 Ultimate TicTacToe(which is an extension of 3x3
 TicTacToe), where there are 16 blocks each having 4x4 cells.
 
 ● Each game is between two teams.
@@ -15,8 +15,6 @@ blocks.
 
 ● Note: This version of Intelligent TicTacToe is an extension of the original version of and
 is different from it.
-
-(​ https://mathwithbaddrawings.com/ultimate-tic-tac-toe-original-post/​ )
 
 
 ![Alt text](/ai1.png?raw=true "The Game")
